@@ -1,5 +1,7 @@
 package com.flowledger.service;
 
+import com.flowledger.dto.BankCashResponse;
+import com.flowledger.dto.CashFlowForecastResponse;
 import com.flowledger.dto.DashboardResponse;
 import com.flowledger.dto.TransactionResponse;
 import com.flowledger.enums.TransactionType;
@@ -56,10 +58,47 @@ public class DashboardServiceImpl implements DashboardService {
                         transaction.getBankAccount().getBankName(),
                         transaction.getType().name(),
                         transaction.getAmount(),
-                        transaction.getCategory(),
+                        transaction.getCategory().name(),
                         transaction.getDescription(),
                         transaction.getDate()
                 ))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BankCashResponse> getCashPositionByBank() {
+
+        return bankAccountRepository.findAll()
+                .stream()
+                .map(account -> new BankCashResponse(
+                        account.getBankName(),
+                        account.getCurrentBalance()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public CashFlowForecastResponse getCashFlowForecast() {
+
+        Double currentCash = bankAccountRepository.findAll()
+                .stream()
+                .mapToDouble(account -> account.getCurrentBalance())
+                .sum();
+
+        Double expectedInflows =
+                transactionRepository.getTotalAmountByType(TransactionType.INCOME);
+
+        Double expectedOutflows =
+                transactionRepository.getTotalAmountByType(TransactionType.EXPENSE);
+
+        Double projectedCash =
+                currentCash + expectedInflows - expectedOutflows;
+
+        return new CashFlowForecastResponse(
+                currentCash,
+                expectedInflows,
+                expectedOutflows,
+                projectedCash
+        );
     }
 }

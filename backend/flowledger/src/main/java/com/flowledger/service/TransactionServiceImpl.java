@@ -23,19 +23,21 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public String addTransaction(TransactionRequest request) {
 
+        // 1. Find Bank Account
         BankAccount bankAccount = bankAccountRepository.findById(request.getBankAccountId())
                 .orElseThrow(() -> new RuntimeException("Bank Account not found"));
 
+        // 2. Create Transaction
         Transaction transaction = Transaction.builder()
                 .type(request.getType())
                 .amount(request.getAmount())
-                .category(request.getCategory())
+                .category(request.getCategory())   // ✅ FIXED (no valueOf)
                 .description(request.getDescription())
                 .date(request.getDate())
                 .bankAccount(bankAccount)
                 .build();
 
-        // Update bank balance
+        // 3. Update Bank Balance
         if (request.getType() == TransactionType.INCOME) {
             bankAccount.setCurrentBalance(
                     bankAccount.getCurrentBalance() + request.getAmount()
@@ -46,6 +48,7 @@ public class TransactionServiceImpl implements TransactionService {
             );
         }
 
+        // 4. Save changes
         bankAccountRepository.save(bankAccount);
         transactionRepository.save(transaction);
 

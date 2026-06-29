@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import com.flowledger.enums.TransactionCategory;
 
 @Entity
 @Table(name = "transactions")
@@ -24,12 +25,13 @@ public class Transaction {
 
     private Double amount;
 
-    private String category;
+    @Enumerated(EnumType.STRING)
+private TransactionCategory category;
 
     private String description;
 
     private LocalDate date;
-
+    
     @ManyToOne
 @JoinColumn(name = "bank_account_id")
 private BankAccount bankAccount;
