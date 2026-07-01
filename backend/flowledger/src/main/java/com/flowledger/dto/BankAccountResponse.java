@@ -1,9 +1,13 @@
 package com.flowledger.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class BankAccountRequest {
+@AllArgsConstructor
+public class BankAccountResponse {
+
+    private Long id;
 
     private String bankName;
 
@@ -11,7 +15,7 @@ public class BankAccountRequest {
 
     private String ifscCode;
 
-    private Double openingBalance;
+    private Double currentBalance;
 
     private String currency;
 }

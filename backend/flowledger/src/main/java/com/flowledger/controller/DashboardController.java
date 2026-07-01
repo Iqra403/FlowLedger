@@ -8,6 +8,7 @@ import com.flowledger.service.DashboardService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.flowledger.dto.BankAccountDropdownResponse;
 
 import java.util.List;
 
@@ -36,6 +37,15 @@ public class DashboardController {
 
         return dashboardService.getRecentTransactions();
     }
+    @GetMapping("/all-transactions")
+public List<TransactionResponse> getAllTransactions() {
+
+    System.out.println(">>> ALL TRANSACTIONS ENDPOINT HIT <<<");
+
+    return dashboardService.getAllTransactions();
+}
+   
+
 
     @GetMapping("/cash-position")
     public List<BankCashResponse> getCashPositionByBank() {
@@ -44,7 +54,12 @@ public class DashboardController {
 
         return dashboardService.getCashPositionByBank();
     }
+@GetMapping("/bank-dropdown")
+public List<BankAccountDropdownResponse> getBankAccounts() {
 
+    return dashboardService.getBankAccounts();
+
+}
     @GetMapping("/cash-flow-forecast")
     public CashFlowForecastResponse getCashFlowForecast() {
 

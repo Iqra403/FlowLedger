@@ -13,5 +13,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     Double getTotalAmountByType(TransactionType type);
 
     List<Transaction> findTop5ByOrderByDateDesc();
-
+List<Transaction> findAllByOrderByDateDesc();
 }

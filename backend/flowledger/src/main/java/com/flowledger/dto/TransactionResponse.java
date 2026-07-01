@@ -11,6 +11,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class TransactionResponse {
 
+    private Long id;   // ✅ IMPORTANT for delete
+
     private String bankName;
 
     private String type;
@@ -22,5 +24,4 @@ public class TransactionResponse {
     private String description;
 
     private LocalDate date;
-
 }

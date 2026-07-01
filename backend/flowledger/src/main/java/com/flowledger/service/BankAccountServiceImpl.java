@@ -36,7 +36,8 @@ public class BankAccountServiceImpl implements BankAccountService {
         BankAccount account = BankAccount.builder()
                 .bankName(request.getBankName())
                 .accountNumber(request.getAccountNumber())
-                .currentBalance(request.getCurrentBalance())
+                .ifscCode(request.getIfscCode())
+                .currentBalance(request.getOpeningBalance())
                 .currency(request.getCurrency())
                 .user(user)
                 .build();

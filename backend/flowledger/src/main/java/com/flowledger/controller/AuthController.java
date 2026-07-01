@@ -4,6 +4,7 @@ import com.flowledger.dto.LoginRequest;
 import com.flowledger.dto.LoginResponse;
 import com.flowledger.dto.RegisterRequest;
 import com.flowledger.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,15 +18,19 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody RegisterRequest request) {
+    public String register(@Valid @RequestBody RegisterRequest request) {
+
         return userService.registerUser(request);
+
     }
 
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest request) {
+    public LoginResponse login(@Valid @RequestBody LoginRequest request) {
 
         String token = userService.loginUser(request);
 
         return new LoginResponse(token);
+
     }
+
 }

@@ -20,6 +20,8 @@ public class BankAccount {
 
     private String accountNumber;
 
+    private String ifscCode;
+
     private Double currentBalance;
 
     private String currency;
