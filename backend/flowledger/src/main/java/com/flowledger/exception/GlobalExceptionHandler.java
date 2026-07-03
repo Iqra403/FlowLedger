@@ -45,12 +45,13 @@ public class GlobalExceptionHandler {
 
     // Any Other Exception
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, String>> handleException(
-            Exception ex) {
+public ResponseEntity<Map<String, String>> handleException(Exception ex) {
 
-        Map<String, String> error = new HashMap<>();
-        error.put("message", "Something went wrong.");
+    ex.printStackTrace();
 
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    Map<String, String> error = new HashMap<>();
+    error.put("message", ex.toString());
+
+    return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+}
 }
